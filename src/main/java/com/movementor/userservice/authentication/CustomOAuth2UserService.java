@@ -1,4 +1,4 @@
-package com.movementor.userservice.services;
+package com.movementor.userservice.authentication;
 
 import com.movementor.userservice.models.User;
 import com.movementor.userservice.repositories.UserRepository;

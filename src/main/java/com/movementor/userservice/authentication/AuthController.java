@@ -1,6 +1,5 @@
-package com.movementor.userservice.controllers;
+package com.movementor.userservice.authentication;
 
-import com.movementor.userservice.components.JwtUtil;
 import com.movementor.userservice.models.User;
 import com.movementor.userservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.movementor.userservice.components;
+package com.movementor.userservice.authentication;
 
 import com.movementor.userservice.models.User;
 import io.jsonwebtoken.io.IOException;

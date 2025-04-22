@@ -1,4 +1,4 @@
-package com.movementor.userservice.components;
+package com.movementor.userservice.authentication;
 
 import io.jsonwebtoken.JwtException; // Might have to change to the OAuth2 Spring Boot JwtException
 import io.jsonwebtoken.Jwts;
