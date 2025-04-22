@@ -33,23 +33,5 @@ public class AuthController {
         return ResponseEntity.ok(token.getPrincipal().getAttributes());
     }
 
-    @GetMapping("/google/callback")
-    public ResponseEntity<?> handleGoogleCallback(OAuth2AuthenticationToken authentication) {
-        String email = authentication.getPrincipal().getAttribute("email");
-
-        // Ensure user is stored in MongoDB
-        User user = userRepository.findByEmail(email).orElseGet(() -> {
-            User newUser = new User();
-            newUser.setEmail(email);
-            newUser.setName(authentication.getPrincipal().getAttribute("name"));
-            return userRepository.save(newUser);
-        });
-
-        // Create token
-        String token = jwtUtil.generateToken(email);
-
-        // Return token to frontend
-        return ResponseEntity.ok(Map.of("token", token));
-    }
 }
 
