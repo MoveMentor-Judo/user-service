@@ -11,7 +11,7 @@ import java.util.Date;
 @Component
 public class JwtUtil {
 
-    private final String SECRET_KEY = "your-secret-key"; // Store securely!
+    private final String SECRET_KEY = "very-super-extra-secret-secret-key"; // Will store securely later...
 
     public String generateToken(String email) {
         return Jwts.builder()

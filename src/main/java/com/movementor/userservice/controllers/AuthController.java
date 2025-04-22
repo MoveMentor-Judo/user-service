@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -31,6 +32,14 @@ public class AuthController {
     @GetMapping("/me")
     public ResponseEntity<?> getTokenFromContext(OAuth2AuthenticationToken token) {
         return ResponseEntity.ok(token.getPrincipal().getAttributes());
+    }
+
+    @PostMapping("/test-save")
+    public ResponseEntity<?> testSave() {
+        User user = new User();
+        user.setEmail("test@example.com");
+        user.setName("Test User");
+        return ResponseEntity.ok(userRepository.save(user));
     }
 
 }
