@@ -31,11 +31,11 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
         String name = oauthToken.getPrincipal().getAttribute("name");
 
         String jwt = jwtUtil.generateToken(email);
-        System.out.println("✅ SuccessHandler: email = " + email);
+        System.out.println("SuccessHandler: email = " + email);
         // Save user logic - this will run on every successful OAuth login
         if (email != null) {
             userRepository.findByEmail(email).orElseGet(() -> {
-                System.out.println("🆕 Creating new user: " + email);
+                System.out.println("Creating new user: " + email);
                 User newUser = new User();
                 newUser.setEmail(email);
                 newUser.setName(name);
@@ -43,7 +43,7 @@ public class OAuth2LoginSuccessHandler implements AuthenticationSuccessHandler {
             });
         }
         // Redirect to frontend with token as query param
-        response.sendRedirect("http://localhost:3000/login/success?token=" + jwt);
+        response.sendRedirect("http://localhost:3000/signin?token=" + jwt);
     }
 }
 
