@@ -1,5 +1,6 @@
 package com.movementor.userservice.posts;
 
+import com.movementor.userservice.repositories.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +15,10 @@ import java.util.List;
 public class PostController {
     @Autowired
     private PostRepository postRepository;
+
+    @Autowired
+    private UserRepository userRepository;
+
 
     @PostMapping
     public ResponseEntity<?> createPost(@RequestBody Post post, HttpServletRequest request) {
@@ -43,8 +48,14 @@ public class PostController {
 
 
     @GetMapping("/author/{userId}")
-    public ResponseEntity<List<Post>> getPostsByUser(@PathVariable String userId) {
+    public ResponseEntity<List<Post>> getPostsByAuthor(@PathVariable String userId) {
         return ResponseEntity.ok(postRepository.findByAuthorId(userId));
+    }
+
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<List<Post>> getPostsByUser(@PathVariable String userId) {
+        String email = userRepository.findById(userId).get().getEmail();
+        return ResponseEntity.ok(postRepository.findByAuthorId(email));
     }
 
     @GetMapping("/search")
