@@ -3,6 +3,7 @@ package com.movementor.userservice.videos;
 import io.jsonwebtoken.io.IOException;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.http.MediaTypeFactory;
 import org.springframework.http.ResponseEntity;
@@ -33,9 +34,15 @@ public class VideoController {
 
     @GetMapping("/{fileName}")
     public ResponseEntity<Resource> getVideo(@PathVariable String fileName) throws IOException, MalformedURLException {
-        Path path = Paths.get(UPLOAD_DIR, fileName);
+        Path path = Paths.get("uploads", fileName);
         Resource resource = new UrlResource(path.toUri());
+
+        if (!resource.exists() || !resource.isReadable()) {
+            return ResponseEntity.notFound().build();
+        }
+
         return ResponseEntity.ok()
+                .header("Cross-Origin-Resource-Policy", "cross-origin") // Add this header
                 .contentType(MediaTypeFactory.getMediaType(resource).orElse(MediaType.APPLICATION_OCTET_STREAM))
                 .body(resource);
     }
