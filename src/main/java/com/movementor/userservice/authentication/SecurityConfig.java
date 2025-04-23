@@ -32,9 +32,9 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         System.out.println("securityFilterChain triggered");
         http
-                .cors(cors -> cors.configurationSource(corsConfigurationSource())) // Updated approach
+                .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests((authorize) -> authorize
-                        .requestMatchers("/auth/**", "/login/**").permitAll()
+                        .requestMatchers("/auth/**", "/login/**", "/videos/**").permitAll() // Add /videos/**
                         .anyRequest().authenticated()
                 )
                 .csrf(AbstractHttpConfigurer::disable)
