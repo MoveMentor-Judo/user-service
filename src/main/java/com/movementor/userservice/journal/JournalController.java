@@ -1,5 +1,6 @@
 package com.movementor.userservice.journal;
 
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -13,18 +14,23 @@ public class JournalController {
     private JournalRepository journalRepository;
 
     @PostMapping
-    public ResponseEntity<JournalEntry> create(@RequestBody JournalEntry entry) {
+    public ResponseEntity<JournalEntry> create(@RequestBody JournalEntry entry, HttpServletRequest request) {
+        String userId = (String) request.getAttribute("userEmail");
+        entry.setUserId(userId);
         return ResponseEntity.ok(journalRepository.save(entry));
     }
 
-    @GetMapping("/user/{userId}")
-    public ResponseEntity<List<JournalEntry>> list(@PathVariable String userId) {
+    @GetMapping
+    public ResponseEntity<List<JournalEntry>> list(HttpServletRequest request) {
+        String userId = (String) request.getAttribute("userEmail");
         return ResponseEntity.ok(journalRepository.findByUserId(userId));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JournalEntry> update(@PathVariable String id, @RequestBody JournalEntry entry) {
+    public ResponseEntity<JournalEntry> update(@PathVariable String id, @RequestBody JournalEntry entry, HttpServletRequest request) {
+        String userId = (String) request.getAttribute("userEmail");
         entry.setId(id);
+        entry.setUserId(userId);
         return ResponseEntity.ok(journalRepository.save(entry));
     }
 
